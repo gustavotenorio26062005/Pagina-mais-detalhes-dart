@@ -8,7 +8,7 @@ class Noticia {
   final String publicoAlvo;
   final String textoBotaoAcao;
 
-  Noticia({
+  const Noticia({
     required this.titulo,
     required this.descricaoCompleta,
     required this.imagemUrl,

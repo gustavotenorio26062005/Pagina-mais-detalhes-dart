@@ -5,7 +5,7 @@ import 'modelo_noticia.dart';
 class DetalhesNoticiaPage extends StatelessWidget {
   final Noticia noticia;
 
-  const DetalhesNoticiaPage({Key? key, required this.noticia}) : super(key: key);
+  const DetalhesNoticiaPage({super.key, required this.noticia});
 
   Color _corDaCategoria(String categoria) {
     if (categoria.toLowerCase().contains('alerta')) return Colors.red;
@@ -94,11 +94,11 @@ class DetalhesNoticiaPage extends StatelessWidget {
                           iconeAcao: Icons.add_alarm,
                           corAcao: Colors.orange,
                           aoClicar: () {
-                            // Dica para o futuro: Usar o pacote "add_2_calendar" para salvar nativamente.
+                            // TODO: integrar com o calendário do aparelho (ex.: pacote "add_2_calendar").
+                            // Por enquanto nada é salvo, então a mensagem não afirma que foi.
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                content: Text('🔔 Lembrete da campanha salvo no seu calendário!'),
-                                backgroundColor: Colors.green,
+                                content: Text('Em breve: salvar lembrete da campanha no calendário.'),
                               ),
                             );
                           }
@@ -117,9 +117,13 @@ class DetalhesNoticiaPage extends StatelessWidget {
                             final query = Uri.encodeComponent(noticia.local);
                             final url = Uri.parse('https://maps.google.com/?q=$query');
                             
-                            if (await canLaunchUrl(url)) {
-                              await launchUrl(url);
-                            } else {
+                            bool abriu;
+                            try {
+                              abriu = await launchUrl(url, mode: LaunchMode.externalApplication);
+                            } catch (_) {
+                              abriu = false;
+                            }
+                            if (!abriu && context.mounted) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(content: Text('Não foi possível abrir o mapa.')),
                               );
@@ -204,8 +208,8 @@ class DetalhesNoticiaPage extends StatelessWidget {
               if (iconeAcao != null)
                 Container(
                   padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(color: corAcao!.withOpacity(0.1), shape: BoxShape.circle),
-                  child: Icon(iconeAcao, color: corAcao, size: 20),
+                  decoration: BoxDecoration(color: (corAcao ?? Colors.blueGrey).withOpacity(0.1), shape: BoxShape.circle),
+                  child: Icon(iconeAcao, color: corAcao ?? Colors.blueGrey, size: 20),
                 ),
             ],
           ),

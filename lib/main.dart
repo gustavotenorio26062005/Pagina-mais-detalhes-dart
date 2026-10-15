@@ -7,12 +7,12 @@ void main() {
 }
 
 class MeuAppDeTeste extends StatelessWidget {
-  const MeuAppDeTeste({Key? key}) : super(key: key);
+  const MeuAppDeTeste({super.key});
 
   @override
   Widget build(BuildContext context) {
     // DADO REAL: Campanha da Vacina Butantan-DV em Bragança
-    Noticia noticiaDeTeste = Noticia(
+    final noticiaDeTeste = Noticia(
       titulo: 'Chegada da Vacina Butantan-DV contra a Dengue fortalece combate em Bragança',
       descricaoCompleta: 'A Prefeitura de Bragança Paulista iniciou a vacinação com a Butantan-DV, imunizante inédito de dose única. \n\nNesta primeira fase, a imunização será destinada aos profissionais da Atenção Primária à Saúde que trabalham na linha de frente (médicos, enfermeiros, agentes comunitários e de endemias). A iniciativa visa proteger os trabalhadores e preparar as equipes para futuras etapas de vacinação ampliada para a população geral.',
       imagemUrl: 'https://picsum.photos/800/500?random=20', // Imagem ilustrativa
